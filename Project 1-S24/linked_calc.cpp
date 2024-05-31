@@ -31,6 +31,27 @@ bool LinkedCalc<T>::isDigit(const T& c) {
     return (c >= '0' && c <= '9') ;
 }
 
+//helper function to convert needed parts of expression to floats
+template <typename T>
+float LinkedCalc<T>::convertToFloat(Node<T>*& current){
+    float num = 0.0f;
+    
+    //iterates if value is digit or decimal 
+    while (current && (isDigit(current->data) || current->data == '.')) {
+        //if decimal it adds 1/10 of the value after the decimal to num
+        if (current->data == '.') {
+            current = current->next;
+            num += 0.1 * (current->data - '0');
+        //if before the decimal it adds the value to num
+        }else{
+            num += (current->data - '0');
+        }
+        current = current->next;
+    }
+    
+    return num;
+}
+
 template <typename T>
 bool LinkedCalc<T>::validateExpression() {
     Node<T>* cur = head;
