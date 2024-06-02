@@ -26,6 +26,7 @@ private:
     Node<T>* head;
     bool isDigit(const T& c);
     float convertToFloat(Node<T>*& current);
+    bool isOperator(char c);
 };
 
 

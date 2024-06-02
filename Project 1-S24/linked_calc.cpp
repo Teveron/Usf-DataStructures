@@ -31,6 +31,16 @@ bool LinkedCalc<T>::isDigit(const T& c) {
     return (c >= '0' && c <= '9') ;
 }
 
+// Checks if a char is an operator
+template <typename T>
+bool LinkedCalc<T>::isOperator(char c)
+{
+    return c == '+' ||
+        c == '-' ||
+        c == '*' ||
+        c == '/';
+}
+
 //helper function to convert needed parts of expression to floats
 template <typename T>
 float LinkedCalc<T>::convertToFloat(Node<T>*& current){
@@ -62,14 +72,14 @@ bool LinkedCalc<T>::validateExpression() {
             return false;
         }
         //returns false if two consecutive operators
-        if((cur->data =='+' || cur->data =='-' || cur->data =='*' || cur->data =='/') && (cur->next->data =='+' || cur->next->data =='-' || cur->next->data =='*' || cur->next->data =='/')){
+        if(isOperator(cur->data) && isOperator(cur->next->data)){
             return false;
         }
         cur = cur-> next;
     }
     
     //returns false if operator isnt followed by a number
-    if((cur->data == '.' || cur->data =='+' || cur->data =='-' || cur->data =='*' || cur->data =='/') && cur->next == nullptr){
+    if((cur->data == '.' || isOperator(cur->data))  && cur->next == nullptr){
         return false;
     }
 
