@@ -19,13 +19,6 @@
 
 
 // +---------------------------------------------------------------------------+
-// | Defines                                                                   |
-// +---------------------------------------------------------------------------+
-#define Log Logger.Here(__FILE__, __func__, __LINE__)
-#define MAX_MESSAGE_LENGTH 1000
-
-
-// +---------------------------------------------------------------------------+
 // | Includes                                                                  |
 // +---------------------------------------------------------------------------+
 #include <iostream>
@@ -33,6 +26,23 @@
 #include <string>
 #include <map>
 #include <ctime>
+//#include <vector>
+
+
+// +---------------------------------------------------------------------------+
+// | Namespace                                                                 |
+// +---------------------------------------------------------------------------+
+namespace Anderson
+{
+    namespace Logging
+    {
+
+
+// +---------------------------------------------------------------------------+
+// | Defines                                                                   |
+// +---------------------------------------------------------------------------+
+#define Log Logger->Here(__FILE__, __func__, __LINE__)
+#define MAX_MESSAGE_LENGTH 1000
 
 
 // +---------------------------------------------------------------------------+
@@ -57,6 +67,7 @@ class Logger
 {
 public:
     Logger();
+    Logger(LogLevel level, std::string className);
     void Initialize();
     void Finialize();
     ~Logger();
@@ -67,7 +78,9 @@ public:
     void SetLogToFile(bool logToFile);
     void SetLogFilePath(std::string logFilePath);
     void SetAppendExistingLog(bool append);
+    void SetClassName(std::string className);
     void SetHeaderFunctionWidth(int headerWidth);
+    bool IsInitialized();
 
     // Logging methods
     void LogTrace(std::string messageOrFormat, ...);
@@ -76,6 +89,11 @@ public:
     void LogWarning(std::string messageOrFormat, ...);
     void LogError(std::string messageOrFormat, ...);
     void LogFatal(std::string messageOrFormat, ...);
+
+    // Helper methods
+    bool WillLog(LogLevel level);
+    //template <typename T>
+    //std::string VectorToString(std::vector<T> v);
 
     Logger* Here(std::string file, std::string function, int line);
 private:
@@ -89,6 +107,7 @@ private:
         { LogLevel::Fatal, "FATAL" },
     };
 
+    bool Initialized = false;
     LogLevel Level = LogLevel::Information;
     bool LogToConsole = true;
     bool LogToFile = false;
@@ -97,6 +116,7 @@ private:
     int HeaderFuctionWidth = 40;
     std::string HeaderFormat = "";
 
+    std::string ClassName = "";
     std::string FileName;
     std::string FunctionName;
     int Line = 0;
@@ -109,3 +129,5 @@ private:
 };
 
 #endif // LOGGER_H
+    } // namespace Logging
+} // namespace Anderson
