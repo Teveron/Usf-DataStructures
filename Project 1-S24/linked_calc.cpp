@@ -41,15 +41,6 @@ bool LinkedCalc<T>::isOperator(char c)
         c == '/';
 }
 
-// Converts a node to its floating point representation
-template <typename T>
-float LinkedCalc<T>::convertToFloat(Node<T>*& current)
-{
-    if (strcmp(typeid(current->data).name(), "char") == 0)
-        return (float)(current->data - 48);
-    else
-        return 0.0;
-}
 template <typename T>
 bool LinkedCalc<T>::validateExpression() {
     Node<T>* cur = head;
