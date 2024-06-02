@@ -78,7 +78,7 @@ bool LinkedCalc<T>::validateExpression() {
         cur = cur-> next;
     }
     
-    //returns false if operator isnt followed by a number
+    //returns false if operator is not followed by a number
     if((cur->data == '.' || isOperator(cur->data))  && cur->next == nullptr){
         return false;
     }
